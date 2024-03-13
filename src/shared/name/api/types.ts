@@ -1,5 +1,10 @@
-import { GetNameInfoResponse } from ".";
-import { isNumber, isString } from "../typeGuards";
+import { isNumber, isString } from "../../typeGuards";
+
+interface GetNameInfoResponse {
+    count: number;
+    name: string;
+    age: number;
+}
 
 export function isGetNameInfoResponse(
     unknownType: unknown

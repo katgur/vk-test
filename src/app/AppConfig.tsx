@@ -4,11 +4,12 @@ import {
     useAppearance,
     useInsets,
 } from "@vkontakte/vk-bridge-react";
-import { transformVKBridgeAdaptivity } from "./transformVKBridgeAdaptivity";
+import { transformVKBridgeAdaptivity } from "./utils/transformVKBridgeAdaptivity";
 import vkBridge, {
     parseURLSearchParamsForGetLaunchParams,
 } from "@vkontakte/vk-bridge";
 import { AdaptivityProvider, AppRoot, ConfigProvider } from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
 
 interface AppConfigProps {
     children: ReactNode;

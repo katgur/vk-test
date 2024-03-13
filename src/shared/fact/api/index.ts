@@ -1,4 +1,4 @@
-import { isGetFactResponse } from "../../../shared/fact/typeGuards";
+import { isGetFactResponse } from "./types";
 
 const url = "https://catfact.ninja/fact";
 

@@ -5,8 +5,8 @@ import {
     Group,
     CellButton,
 } from "@vkontakte/vkui";
-import FactPanel from "../../widgets/fact/ui";
-import NamePanel from "../../widgets/name/ui";
+import FactPanel from "../../features/fact";
+import NamePanel from "../../features/name";
 import { useState } from "react";
 
 function MainPage() {

@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from ".";
 import { useState } from "react";
 
 function useGetNameInfoQuery() {
+    const queryClient = useQueryClient();
     const [name, setName] = useState<string>("john");
     const result = useQuery({
         queryKey: ["nameInfo", name],
@@ -13,7 +14,12 @@ function useGetNameInfoQuery() {
         retry: false,
     });
 
-    return { result, name, setName };
+    return {
+        result,
+        name,
+        setName,
+        cancel: () => queryClient.cancelQueries({ queryKey: ["nameInfo"] }),
+    };
 }
 
 export default useGetNameInfoQuery;

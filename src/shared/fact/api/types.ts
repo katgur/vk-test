@@ -1,5 +1,9 @@
-import { GetFactResponse } from ".";
-import { isNumber, isString } from "../typeGuards";
+import { isNumber, isString } from "../../typeGuards";
+
+interface GetFactResponse {
+    fact: string;
+    length: number;
+}
 
 export function isGetFactResponse(
     unknownType: unknown

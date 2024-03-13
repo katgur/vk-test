@@ -1,4 +1,4 @@
-import { isGetNameInfoResponse } from "../../../shared/name/typeGuards";
+import { isGetNameInfoResponse } from "./types";
 
 const url = "https://api.agify.io";
 

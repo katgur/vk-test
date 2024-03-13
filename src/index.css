@@ -3,3 +3,8 @@
     justify-content: center;
     height: fit-content;
 }
+
+.error {
+    color: red;
+    margin-bottom: 0.25rem;
+}

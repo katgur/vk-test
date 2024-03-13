@@ -8,9 +8,9 @@ import {
     FormItem,
     FormLayoutGroup,
 } from "@vkontakte/vkui";
-import { useEffect, useRef } from "react";
-import Error from "../../../features/error";
-import useGetFactQuery from "../api/useGetFactQuery";
+import Error from "../error";
+import useGetFactQuery from "../../shared/fact/api/useGetFactQuery";
+import useCursorAfterFirstWord from "./lib/useCursorAfterFirstWord";
 
 interface FactPanelProps {
     id: string;
@@ -18,28 +18,7 @@ interface FactPanelProps {
 
 function FactPanel({ id }: FactPanelProps) {
     const { isPending, error, data, refetch } = useGetFactQuery();
-    const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-    useEffect(() => {
-        if (!data) {
-            return;
-        }
-
-        const setCursorAt = (pos: number) => {
-            const textArea = textAreaRef.current;
-            if (!textArea) {
-                return;
-            }
-            textArea.focus();
-            textArea.selectionEnd = pos;
-        };
-
-        const getFirstWordEnd = (text: string) => {
-            return text.split(" ")[0].length;
-        };
-
-        setCursorAt(getFirstWordEnd(data.fact));
-    }, [data]);
+    const textareaRef = useCursorAfterFirstWord(data?.fact);
 
     if (isPending) {
         return <ScreenSpinner />;
@@ -54,7 +33,11 @@ function FactPanel({ id }: FactPanelProps) {
             <Group header={<Header mode="secondary">Fact</Header>}>
                 <FormLayoutGroup>
                     <FormItem>
-                        <Textarea maxHeight={300} value={data.fact} getRef={textAreaRef} />
+                        <Textarea
+                            maxHeight={300}
+                            value={data.fact}
+                            getRef={textareaRef}
+                        />
                     </FormItem>
                     <FormItem>
                         <Button onClick={() => refetch()} type="button">
