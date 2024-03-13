@@ -3,7 +3,7 @@ import { isGetNameInfoResponse } from "../../../shared/name/typeGuards";
 const url = "https://api.agify.io";
 
 async function getNameInfo(name: string, signal: AbortSignal) {
-    const response = await fetch(`${url}/?name=${name}`, {
+    const response = await fetch(`${url}?name=${name}`, {
         signal,
     });
     const json = await response.json();

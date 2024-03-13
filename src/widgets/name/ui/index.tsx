@@ -3,20 +3,20 @@ import {
     Group,
     Header,
     Panel,
-    View,
     Text,
     FormItem,
     FormLayoutGroup,
     Input,
     ScreenSpinner,
 } from "@vkontakte/vkui";
-import { useState } from "react";
-import api from "../api";
+import { ChangeEvent, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import Error from "../../../features/error";
+import useDebounce from "../../../shared/debounce/useDebounce";
+import useGetNameInfoQuery from "../api/useGetNameInfoQuery";
 
 interface FormValues {
     name: string;
@@ -28,12 +28,15 @@ const schema = yup
             .string()
             .required()
             .max(50)
-            .matches(/[a-zA-Z]/, "Input must be only letters"),
+            .matches(/^[a-zA-Z]+$/, "Input must be only letters"),
     })
     .required();
 
-function NameView() {
-    const [name, setName] = useState<string>("");
+interface NamePanelProps {
+    id: string;
+}
+
+function NamePanel({ id }: NamePanelProps) {
     const {
         register,
         handleSubmit,
@@ -42,14 +45,10 @@ function NameView() {
         resolver: yupResolver(schema),
     });
     const queryClient = useQueryClient();
-    const { isPending, error, data } = useQuery({
-        queryKey: ["nameInfo", name],
-        queryFn: async ({ signal }) => {
-            return await api.getNameInfo(name, signal);
-        },
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
+    const { result, name, setName } = useGetNameInfoQuery();
+    const handleChange = useDebounce((name) => setName(name), 3000);
+
+    const { data, isPending, error } = result;
 
     const nameField = register("name");
 
@@ -61,6 +60,17 @@ function NameView() {
         setName(data.name);
     });
 
+    const onChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            nameField.onChange(e);
+            const name = e.target.value;
+            if (schema.isValidSync({ name })) {
+                handleChange(name);
+            }
+        },
+        [handleChange, nameField]
+    );
+
     if (isPending) {
         return <ScreenSpinner />;
     }
@@ -70,33 +80,32 @@ function NameView() {
     }
 
     return (
-        <View activePanel="name">
-            <Panel id="name">
-                <Group header={<Header mode="secondary">Name</Header>}>
-                    <FormLayoutGroup>
-                        <form onSubmit={onSubmit}>
-                            <FormItem>
-                                {errors.name && (
-                                    <Text>{`Invalid input: ${errors.name.message}`}</Text>
-                                )}
-                                <Input
-                                    name={nameField.name}
-                                    onBlur={nameField.onBlur}
-                                    onChange={nameField.onChange}
-                                    getRef={nameField.ref}
-                                    type="text"
-                                />
-                                {data && <Text>{`Age: ${data.age}`}</Text>}
-                            </FormItem>
-                            <FormItem>
-                                <Button type="submit">Submit</Button>
-                            </FormItem>
-                        </form>
-                    </FormLayoutGroup>
-                </Group>
-            </Panel>
-        </View>
+        <Panel id={id}>
+            <Group header={<Header mode="secondary">Fact</Header>}>
+                <FormLayoutGroup>
+                    <form onSubmit={onSubmit}>
+                        <FormItem>
+                            {errors.name && (
+                                <Text>{`Invalid input: ${errors.name.message}`}</Text>
+                            )}
+                            <Input
+                                name={nameField.name}
+                                onBlur={nameField.onBlur}
+                                onChange={onChange}
+                                getRef={nameField.ref}
+                                type="text"
+                                defaultValue={name}
+                            />
+                            {data && <Text>{`Age: ${data.age}`}</Text>}
+                        </FormItem>
+                        <FormItem>
+                            <Button type="submit">Submit</Button>
+                        </FormItem>
+                    </form>
+                </FormLayoutGroup>
+            </Group>
+        </Panel>
     );
 }
 
-export default NameView;
+export default NamePanel;

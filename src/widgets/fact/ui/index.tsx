@@ -4,24 +4,19 @@ import {
     Header,
     Panel,
     Textarea,
-    View,
-    Text,
-    FormItem,
-    FormLayoutGroup,
     ScreenSpinner,
+    SimpleCell,
 } from "@vkontakte/vkui";
 import { useEffect, useRef } from "react";
-import api from "../api";
-import { useQuery } from "@tanstack/react-query";
 import Error from "../../../features/error";
+import useGetFactQuery from "../api/useGetFactQuery";
 
-function FactView() {
-    const { isPending, error, data, refetch } = useQuery({
-        queryKey: ["fact"],
-        queryFn: api.getFact,
-        refetchOnWindowFocus: false,
-        retry: false,
-    });
+interface FactPanelProps {
+    id: string;
+}
+
+function FactPanel({ id }: FactPanelProps) {
+    const { isPending, error, data, refetch } = useGetFactQuery();
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
@@ -49,28 +44,21 @@ function FactView() {
     }
 
     if (error) {
-        return <Error error={error.message} />
+        return <Error error={error.message} />;
     }
 
     return (
-        <View activePanel="fact">
-            <Panel id="fact">
-                <Group header={<Header mode="secondary">Fact</Header>}>
-                    {error && <Text>{`Error: ${error}`}</Text>}
-                    <FormLayoutGroup>
-                        <FormItem>
-                            <Textarea value={data.fact} getRef={textAreaRef} />
-                        </FormItem>
-                        <FormItem>
-                            <Button onClick={() => refetch()} type="submit">
-                                Click here
-                            </Button>
-                        </FormItem>
-                    </FormLayoutGroup>
-                </Group>
-            </Panel>
-        </View>
+        <Panel id={id}>
+            <Group header={<Header mode="secondary">Fact</Header>}>
+                <Textarea value={data.fact} getRef={textAreaRef} />
+                <SimpleCell>
+                    <Button onClick={() => refetch()} type="button">
+                        Click here
+                    </Button>
+                </SimpleCell>
+            </Group>
+        </Panel>
     );
 }
 
-export default FactView;
+export default FactPanel;
