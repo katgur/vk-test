@@ -14,7 +14,7 @@ function MainPage() {
 
     return (
         <SplitLayout className="center">
-            <SplitCol maxWidth={280} autoSpaced>
+            <SplitCol maxWidth={560} autoSpaced>
                 <Group>
                     <CellButton onClick={() => setActivePanel("fact")}>
                         Go to facts
@@ -23,8 +23,6 @@ function MainPage() {
                         Go to names
                     </CellButton>
                 </Group>
-            </SplitCol>
-            <SplitCol maxWidth={560} autoSpaced>
                 <View activePanel={activePanel}>
                     <FactPanel id="fact" />
                     <NamePanel id="name" />

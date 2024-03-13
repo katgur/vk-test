@@ -5,7 +5,8 @@ import {
     Panel,
     Textarea,
     ScreenSpinner,
-    SimpleCell,
+    FormItem,
+    FormLayoutGroup,
 } from "@vkontakte/vkui";
 import { useEffect, useRef } from "react";
 import Error from "../../../features/error";
@@ -36,6 +37,7 @@ function FactPanel({ id }: FactPanelProps) {
         const getFirstWordEnd = (text: string) => {
             return text.split(" ")[0].length;
         };
+
         setCursorAt(getFirstWordEnd(data.fact));
     }, [data]);
 
@@ -50,12 +52,16 @@ function FactPanel({ id }: FactPanelProps) {
     return (
         <Panel id={id}>
             <Group header={<Header mode="secondary">Fact</Header>}>
-                <Textarea value={data.fact} getRef={textAreaRef} />
-                <SimpleCell>
-                    <Button onClick={() => refetch()} type="button">
-                        Click here
-                    </Button>
-                </SimpleCell>
+                <FormLayoutGroup>
+                    <FormItem>
+                        <Textarea maxHeight={300} value={data.fact} getRef={textAreaRef} />
+                    </FormItem>
+                    <FormItem>
+                        <Button onClick={() => refetch()} type="button">
+                            Click here
+                        </Button>
+                    </FormItem>
+                </FormLayoutGroup>
             </Group>
         </Panel>
     );
