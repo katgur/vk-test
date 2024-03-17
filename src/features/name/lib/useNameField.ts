@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useMemo } from "react";
-import useDebounce from "../../../shared/debounce/useDebounce";
+import useDebounce from "@shared/debounce/useDebounce";
 import { UseFormRegister } from "react-hook-form";
 import { FormValues } from "./useNameForm";
 

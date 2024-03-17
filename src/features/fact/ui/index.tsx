@@ -8,9 +8,9 @@ import {
     FormItem,
     FormLayoutGroup,
 } from "@vkontakte/vkui";
-import Error from "../error";
-import useGetFactQuery from "../../shared/fact/api/useGetFactQuery";
-import useCursorAfterFirstWord from "./lib/useCursorAfterFirstWord";
+import Error from "@shared/error";
+import useGetFactQuery from "../api/useGetFactQuery";
+import useCursorAfterFirstWord from "../lib/useCursorAfterFirstWord";
 
 interface FactPanelProps {
     id: string;

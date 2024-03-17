@@ -1,4 +1,4 @@
-import { isNumber, isString } from "../../typeGuards";
+import { isNumber, isString } from "@shared/typeGuards";
 
 interface GetNameInfoResponse {
     count: number;

@@ -4,7 +4,7 @@ import {
     useAppearance,
     useInsets,
 } from "@vkontakte/vk-bridge-react";
-import { transformVKBridgeAdaptivity } from "./utils/transformVKBridgeAdaptivity";
+import { transformVKBridgeAdaptivity } from "./lib/transformVKBridgeAdaptivity";
 import vkBridge, {
     parseURLSearchParamsForGetLaunchParams,
 } from "@vkontakte/vk-bridge";
