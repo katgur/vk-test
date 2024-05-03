@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import api from ".";
 import { useState } from "react";
+import api from ".";
 
 function useGetNameInfoQuery() {
     const queryClient = useQueryClient();

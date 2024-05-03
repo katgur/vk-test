@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useMemo } from "react";
-import useDebounce from "@shared/debounce/useDebounce";
 import { UseFormRegister } from "react-hook-form";
+import useDebounce from "@shared/debounce/useDebounce";
 import { FormValues } from "./useNameForm";
 
 interface NameFieldProps {

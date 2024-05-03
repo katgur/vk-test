@@ -13,8 +13,8 @@ import {
 } from "@vkontakte/vkui";
 import Error from "@shared/error";
 import useGetNameInfoQuery from "../api/useGetNameInfoQuery";
-import useNameForm from "../lib/useNameForm";
 import useNameField from "../lib/useNameField";
+import useNameForm from "../lib/useNameForm";
 
 interface NamePanelProps {
     id: string;

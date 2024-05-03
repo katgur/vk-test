@@ -5,9 +5,9 @@ import {
     Group,
     CellButton,
 } from "@vkontakte/vkui";
-import FactPanel from "@features/fact/ui";
-import NamePanel from "@features/name/ui";
 import { useState } from "react";
+import { FactPanel } from "@features/fact";
+import { NamePanel } from "@features/name";
 
 function MainPage() {
     const [activePanel, setActivePanel] = useState<string>("fact");

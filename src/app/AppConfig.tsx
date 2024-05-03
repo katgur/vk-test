@@ -1,14 +1,14 @@
-import { ReactNode, useEffect } from "react";
+import vkBridge, {
+    parseURLSearchParamsForGetLaunchParams,
+} from "@vkontakte/vk-bridge";
 import {
     useAdaptivity,
     useAppearance,
     useInsets,
 } from "@vkontakte/vk-bridge-react";
-import { transformVKBridgeAdaptivity } from "./lib/transformVKBridgeAdaptivity";
-import vkBridge, {
-    parseURLSearchParamsForGetLaunchParams,
-} from "@vkontakte/vk-bridge";
 import { AdaptivityProvider, AppRoot, ConfigProvider } from "@vkontakte/vkui";
+import { ReactNode, useEffect } from "react";
+import { transformVKBridgeAdaptivity } from "./lib/transformVKBridgeAdaptivity";
 import "@vkontakte/vkui/dist/vkui.css";
 
 interface AppConfigProps {
