@@ -34,8 +34,9 @@ function FactPanel({ id }: FactPanelProps) {
                 <FormLayoutGroup>
                     <FormItem>
                         <Textarea
+                            key={data.fact.slice(0, 32)}
                             maxHeight={300}
-                            value={data.fact}
+                            defaultValue={data.fact}
                             getRef={textareaRef}
                         />
                     </FormItem>
